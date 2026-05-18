@@ -1,0 +1,11 @@
+:root {
+  --background: #f3f7fb;
+  --foreground: #172033;
+  --color-muted: #64748b;
+  --color-panel: #ffffff;
+  --color-line: #dbe3ef;
+  --color-soft: #eaf1ff;
+  --shadow-soft: 0 24px 80px rgba(23, 32, 51, 0.12);
+  --content-width: 64rem;
+  --radius-base: 0.5rem;
+}

@@ -5,12 +5,16 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:static": "set NEXT_OUTPUT=export&& next build",
     "start": "next start",
+    "start:static": "npx --yes http-server out -p 8080 -e html",
     "lint": "eslint"
   },
   "dependencies": {
+    "bootstrap": "^5.3.8",
     "next": "16.2.4",
     "react": "19.2.4",
+    "react-bootstrap": "^2.10.10",
     "react-dom": "19.2.4"
   },
   "devDependencies": {
