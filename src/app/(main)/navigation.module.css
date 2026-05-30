@@ -11,9 +11,13 @@
 
 .link {
   border-radius: var(--radius-base);
+  border: 0;
+  background: transparent;
   color: var(--color-muted);
+  cursor: pointer;
   font-size: 0.875rem;
   font-weight: 600;
+  font-family: inherit;
   padding: 0.5rem 0.75rem;
   text-decoration: none;
   transition:
@@ -30,6 +34,16 @@
   background: linear-gradient(135deg, #172033, #334155);
   color: #ffffff;
   box-shadow: 0 10px 24px rgba(23, 32, 51, 0.18);
+}
+
+.userName {
+  align-items: center;
+  color: var(--foreground);
+  display: inline-flex;
+  font-size: 0.875rem;
+  font-weight: 700;
+  min-height: 2.25rem;
+  padding: 0.5rem 0.25rem;
 }
 
 .sectionActive {

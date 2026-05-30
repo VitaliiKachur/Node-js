@@ -1,6 +1,9 @@
 import { EnvironmentPanel } from "@/components/environment-panel";
+import { ProfileForm } from "@/components/profile-form";
+import { getCurrentUser } from "@/lib/current-user";
 
-export default function ProfileSettingsPage() {
+export default async function ProfileSettingsPage() {
+  const user = await getCurrentUser();
   const appName = process.env.LAB_APP_NAME ?? "Missing LAB_APP_NAME";
   const serverRegion =
     process.env.LAB_SERVER_REGION ?? "Missing LAB_SERVER_REGION";
@@ -27,20 +30,32 @@ export default function ProfileSettingsPage() {
         </p>
       </section>
 
-      <div className="grid gap-4 tablet:grid-cols-2">
-        {["Display name", "Email preferences", "Language", "Timezone"].map(
-          (item) => (
-            <section
-              key={item}
-              className="rounded-md border border-brand-line bg-white p-5 shadow-sm"
-            >
-              <h2 className="text-xl font-bold text-brand-ink">{item}</h2>
-              <p className="mt-2 text-brand-muted">
-                Responsive settings card for {item.toLowerCase()}.
-              </p>
-            </section>
-          ),
-        )}
+      <div className="grid gap-4 tablet:grid-cols-[1.4fr_0.8fr]">
+        <ProfileForm name={user.name} age={user.age} />
+
+        <section className="rounded-md border border-brand-line bg-white p-6 shadow-sm">
+          <h2 className="text-2xl font-bold text-brand-ink">
+            Account details
+          </h2>
+          <dl className="mt-5 space-y-4">
+            <div>
+              <dt className="text-sm font-semibold uppercase text-brand-muted">
+                Email
+              </dt>
+              <dd className="mt-1 break-all font-semibold text-brand-ink">
+                {user.email}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-sm font-semibold uppercase text-brand-muted">
+                Provider
+              </dt>
+              <dd className="mt-1 font-semibold capitalize text-brand-ink">
+                {user.provider ?? "credentials"}
+              </dd>
+            </div>
+          </dl>
+        </section>
       </div>
 
       <EnvironmentPanel

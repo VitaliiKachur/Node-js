@@ -1,4 +1,9 @@
-export default function ProfileSecurityPage() {
+import { PasswordForm } from "@/components/password-form";
+import { getCurrentUser } from "@/lib/current-user";
+
+export default async function ProfileSecurityPage() {
+  const user = await getCurrentUser();
+
   return (
     <div className="space-y-6">
       <section className="rounded-md border border-brand-line bg-white/95 p-6 shadow-[var(--shadow-soft)] tablet:p-8">
@@ -13,19 +18,7 @@ export default function ProfileSecurityPage() {
         </p>
       </section>
 
-      <div className="grid gap-4 tablet:grid-cols-3">
-        {["Password", "Two-factor auth", "Active sessions"].map((item) => (
-          <section
-            key={item}
-            className="rounded-md border border-brand-line bg-white p-5 shadow-sm"
-          >
-            <h2 className="text-xl font-bold text-brand-ink">{item}</h2>
-            <p className="mt-2 text-brand-muted">
-              Secure and responsive account control.
-            </p>
-          </section>
-        ))}
-      </div>
+      <PasswordForm hasPassword={Boolean(user.passwordHash)} />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs";
 import { assertDatabaseUrl, loadDatabaseEnv } from "../scripts/env.mjs";
 
 const { databaseEnv, envFile } = loadDatabaseEnv();
@@ -9,6 +10,15 @@ const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL,
 });
 const prisma = new PrismaClient({ adapter });
+
+const users = [
+  {
+    email: "student@example.com",
+    password: "password123",
+    name: "Student User",
+    provider: "credentials",
+  },
+];
 
 const articles = [
   {
@@ -66,14 +76,35 @@ async function main() {
   await prisma.comment.deleteMany();
   await prisma.article.deleteMany();
 
+  for (const user of users) {
+    const passwordHash = await bcrypt.hash(user.password, 10);
+
+    await prisma.user.upsert({
+      where: { email: user.email },
+      update: {
+        name: user.name,
+        passwordHash,
+        provider: user.provider,
+      },
+      create: {
+        email: user.email,
+        name: user.name,
+        passwordHash,
+        provider: user.provider,
+      },
+    });
+  }
+
   for (const article of articles) {
     await prisma.article.create({ data: article });
   }
 
+  const userCount = await prisma.user.count();
   const articleCount = await prisma.article.count();
   const commentCount = await prisma.comment.count();
 
   console.log("Seed completed successfully.");
+  console.log(`Created or updated users: ${userCount}`);
   console.log(`Created articles: ${articleCount}`);
   console.log(`Created comments: ${commentCount}`);
 }
