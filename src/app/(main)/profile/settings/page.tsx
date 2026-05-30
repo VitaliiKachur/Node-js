@@ -1,4 +1,18 @@
+import { EnvironmentPanel } from "@/components/environment-panel";
+
 export default function ProfileSettingsPage() {
+  const appName = process.env.LAB_APP_NAME ?? "Missing LAB_APP_NAME";
+  const serverRegion =
+    process.env.LAB_SERVER_REGION ?? "Missing LAB_SERVER_REGION";
+  const publicMessage =
+    process.env.NEXT_PUBLIC_LAB_MESSAGE ?? "Missing NEXT_PUBLIC_LAB_MESSAGE";
+
+  console.log("Server environment variables:", {
+    appName,
+    serverRegion,
+    publicMessage,
+  });
+
   return (
     <div className="space-y-6">
       <section className="rounded-md border border-brand-line bg-white/95 p-6 shadow-[var(--shadow-soft)] tablet:p-8">
@@ -28,6 +42,12 @@ export default function ProfileSettingsPage() {
           ),
         )}
       </div>
+
+      <EnvironmentPanel
+        appName={appName}
+        serverRegion={serverRegion}
+        publicMessage={publicMessage}
+      />
     </div>
   );
 }

@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lab 1
 
-## Getting Started
+Next.js project for the lab tasks.
 
-First, run the development server:
+## Stack
+
+- Next.js App Router
+- TypeScript
+- ESLint
+- TailwindCSS
+- React Bootstrap
+
+## Run
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```text
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Environment Variables
 
-## Learn More
+The project uses `.env.local`:
 
-To learn more about Next.js, take a look at the following resources:
+```env
+LAB_APP_NAME=Next Lab Environment
+LAB_SERVER_REGION=Ukraine
+NEXT_PUBLIC_LAB_MESSAGE=Public browser variable
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE?sslmode=require"
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`NEXT_PUBLIC_LAB_MESSAGE` is available in the browser.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Production Database
 
-## Deploy on Vercel
+The project uses PostgreSQL with Prisma ORM.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Database files:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `prisma/schema.prisma` - database schema
+- `prisma/seed.mjs` - seed file with initial data
+- `scripts/check-db.mjs` - database connection check
+- `src/lib/db.ts` - Prisma client helper
+
+Before running database commands, create a production PostgreSQL database, for example in Vercel Postgres or Neon, and paste the connection string into `.env.local` as `DATABASE_URL`.
+
+Generate Prisma Client:
+
+```bash
+npm run db:generate
+```
+
+Create tables in the database:
+
+```bash
+npm run db:push
+```
+
+Seed initial data:
+
+```bash
+npm run db:seed
+```
+
+Check database connection:
+
+```bash
+npm run db:check
+```
+
+Screenshots to make for this task:
+
+1. Production database dashboard with the created PostgreSQL database.
+2. Terminal after `npm run db:push` with successful table creation logs.
+3. Terminal after `npm run db:seed` with successful seed logs.
+4. Terminal after `npm run db:check` with successful connection logs.
+
+
+
+## Checks
+
+```bash
+npm run lint
+npm run build
+npm run build:static
+```
